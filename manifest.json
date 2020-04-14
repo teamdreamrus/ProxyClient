@@ -1,0 +1,21 @@
+{
+	"manifest_version": 2,
+	"name": "Free Proxy",
+	"description": "Free proxy or use your proxy in our client",
+	"version": "1.0.0",
+	"icons": {
+        "128": "images/128.png"
+    },
+	"browser_action": {
+		"default_icon": "images/128.png",
+		"default_popup": "popup/popup.html"
+    },
+    "background": {
+		"scripts": ["jquery/jquery.min.js","background.js"]
+	  },
+	"web_accessible_resources": [
+		 "popup/popup.js", "images/128.png","jquery/jquery.min.js"
+	],
+	"permissions": ["activeTab", "tabs", "storage", "proxy"],
+	"content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}
