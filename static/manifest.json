@@ -1,0 +1,34 @@
+{
+  "name": "TimeTracker",
+  "version": "1.0.0.0",
+  "description": "TimeTracker, help you with time control",
+  "default_locale": "ru",
+  "author": "AlexeyTop1",
+  "manifest_version": 2,
+  "permissions": [
+    "notifications",
+    "storage",
+    "tabs",
+    "cookies",
+    "<all_urls>"
+  ],
+  "background": {
+    "scripts": ["vendors/bundle.js", "bg/bundle.js"],
+    "persistent": true
+  },
+  "browser_action": {
+    "default_icon": "images/256x256.png",
+    "default_title": "TimeTracker",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "48": "images/256x256.png"
+  }
+   ,
+  "web_accessible_resources": [
+    "popup/*css",
+    "*.css",
+    "images",
+    "*.png"
+  ]
+}
