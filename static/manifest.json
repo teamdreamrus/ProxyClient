@@ -1,7 +1,7 @@
 {
-  "name": "TimeTracker",
   "version": "1.0.0.0",
-  "description": "TimeTracker, help you with time control",
+  "name": "Free Proxy",
+  "description": "Free proxy or use your proxy in our client",
   "default_locale": "ru",
   "author": "AlexeyTop1",
   "manifest_version": 2,
@@ -18,7 +18,7 @@
   },
   "browser_action": {
     "default_icon": "images/256x256.png",
-    "default_title": "TimeTracker",
+    "default_title": "FreeProxyClient",
     "default_popup": "popup.html"
   },
   "icons": {

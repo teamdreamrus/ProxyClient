@@ -1,7 +1,12 @@
 /* eslint-disable max-len */
 import Vue from 'vue';
 import App from './components/app.vue';
-import { DEFAULT_LANG } from '../constants';
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-vue/dist/bootstrap-vue.css';
+Vue.use(BootstrapVue)
+Vue.use(IconsPlugin)
+
 
 class Popup {
   constructor() {
@@ -14,4 +19,4 @@ class Popup {
 
 
 window.popup = new Popup();
- 
+

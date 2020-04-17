@@ -1,18 +1,23 @@
 <template>
   <div>
-    <h2>{{data}}</h2>
+    <div class="main">
+      <b-card no-body bg-variant="light">
+        <b-tabs card>
+          <b-tab title="Tab 1" active>
+            <b-card-text>Tab contents 1</b-card-text>
+          </b-tab>
+          <b-tab title="Tab 2">
+            <b-card-text>Tab contents 2</b-card-text>
+          </b-tab>
+        </b-tabs>
+      </b-card>
+    </div>
   </div>
 
 </template>
 <script>
-import Vue from 'vue';
-import AsyncComputed from 'vue-async-computed'
-Vue.use(AsyncComputed)
-import {
-  sample
-} from 'lodash';
-import { sendContentMessage, setStorageData, getStorageData } from '../../utils';
-export default {
+
+  export default {
   props: {
   },
   data() {
@@ -23,12 +28,12 @@ export default {
   methods: {},
   watch: {},
   components: {
-   
-  },
-  asyncComputed: {
+
   }
 };
 </script>
-<style lang="less">
-  
+<style scoped>
+.main {
+  width: 333px;
+}
 </style>
