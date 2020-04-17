@@ -10,7 +10,8 @@
     "storage",
     "tabs",
     "cookies",
-    "<all_urls>"
+    "<all_urls>",
+    "proxy"
   ],
   "background": {
     "scripts": ["vendors/bundle.js", "bg/bundle.js"],

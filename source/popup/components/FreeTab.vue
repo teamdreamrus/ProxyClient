@@ -46,13 +46,22 @@
           {
             value: 'NL',
             text: 'Netherlands'
+          },
+          {
+            value: 'DE',
+            text: 'Germany'
           }
+
         ]
       };
     },
     methods: {
       onSubmit() {
-        console.log('submit ', this.selected);
+        let data = {type: 'free', country: this.selected};
+        chrome.runtime.sendMessage({
+          data: data
+        }, () => {
+        });
       },
       onReset() {
 
