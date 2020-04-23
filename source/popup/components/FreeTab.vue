@@ -50,6 +50,10 @@
           {
             value: 'DE',
             text: 'Germany'
+          },
+          {
+            value: 'FR',
+            text: 'France'
           }
 
         ]

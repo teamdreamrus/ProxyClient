@@ -66,7 +66,7 @@
     methods: {
       onSubmit() {
         console.log('submit');
-        let data = {type: 'personal', ip: this.ip, port: this.port, protocol: this.selected};
+        let data = {type: 'personal', ip: this.ip, port: this.port, schema: this.selected};
         chrome.runtime.sendMessage({
           data: data
         }, () => {

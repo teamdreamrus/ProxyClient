@@ -32,13 +32,6 @@
 //       function() {});
 //   }
 // });
-let configFree = {
-  country: 'GB',
-  type: 'https',
-  anon: 'elite'
-};
-let url = 'https://www.proxy-list.download/api/v1/get?type=http';
-// let url = 'https://www.proxy-list.download/api/v1/get?type=http&anon=elite';
 
 
 // async function reloadData(url) {
@@ -53,39 +46,7 @@ let url = 'https://www.proxy-list.download/api/v1/get?type=http';
 //   }
 // }
 // reloadData(url);
-
-
-const connect = (rules) => {
-  proxySettings = {
-    mode: 'fixed_servers',
-    rules: rules
-  };
-
-chrome.proxy.settings.set(
-  {
-    value: proxySettings,
-    scope: 'regular'
-  },
-  function (res) {
-    console.log(res);
-  });
-};
-
-
-const reloadData = (url) => {
-  console.log('reload');
-  fetch(url)
-    .then(response => response.text())
-    .then(result => {
-      if (result) {
-        let dataArray = result.split('\n');
-        console.log('set', dataArray[0]);
-        chrome.storage.local.set({ 'data': dataArray[0] });
-        // connecting
-      }
-    })
-    .catch(error => console.log(error));
-};
+// let url = 'https://www.proxy-list.download/api/v1/get?type=http&anon=elite';
 
 
 // 'country[]=CA&country[]=US'
@@ -104,43 +65,112 @@ const reloadData = (url) => {
 // }, 5000);
 
 
-const changeCountry = (config) => {
-  url = url.split('&country=')[0] + '&country=' + config.country;
-  return true;
-};
+//
+// let proxySettings = {
+//   mode: "fixed_servers",
+//   rules: {
+//     singleProxy: {
+//       scheme: 'https',
+//       host: '78.186.109.7',
+//       port: 4145
+//     }
+//   }
+// };
+// chrome.proxy.settings.set(
+//   {value: proxySettings, scope: 'regular'},
+//   function() {});
+
+
+//
+// let configFree = {
+//   country: 'GB',
+//   type: 'https',
+//   anon: 'elite'
+// };
+// let url = 'https://www.proxy-list.download/api/v1/get?type=https&anon=elite';
+//
+//
+//
+//
+// const connect = (rules) => {
+//   let proxySettings = {
+//     mode: 'fixed_servers',
+//     rules: rules
+//   };
+//
+//   chrome.proxy.settings.set(
+//     {
+//       value: proxySettings,
+//       scope: 'regular'
+//     },
+//     function () {});
+//   chrome.proxy.settings.get(
+//     {},
+//     function (config) {
+//       console.log(JSON.stringify(config));
+//     });
+// };
+//
+//
+// const reloadData = (url) => {
+//   console.log('reload');
+//   fetch(url)
+//     .then(response => response.text())
+//     .then(result => {
+//       if (result) {
+//         let dataArray = result.split('\n');
+//         console.log('set', dataArray[0]);
+//         // chrome.storage.local.set({ 'data': dataArray[0] });
+//         // connecting
+//         let res = dataArray[0];
+//         console.log(res);
+//         if (res) {
+//           console.log(res);
+//           const ipPort = res.split(':');
+//           const rules = {
+//             singleProxy: {
+//               scheme: configFree.type,
+//               host: ipPort[0],
+//               port: +ipPort[1]
+//             }
+//           };
+//           console.log('rules', rules);
+//           connect(rules);
+//         }
+//       }
+//     })
+//     .catch(error => console.log(error));
+// };
+//
+//
+//
+//
+//
+// const changeCountry = (config) => {
+//   url = url.split('&country=')[0] + '&country=' + config.country;
+//   return true;
+// };
 
 
 chrome.runtime.onMessage.addListener((msg) => {
   let data = msg.data;
-  console.log(data);
   switch (data.type) {
     case 'free': {
-      configFree.country = data.country;
-      if (changeCountry(configFree)) {
-        reloadData(url);
-
-        chrome.storage.local.get(['data'], (res) => {
-          console.log(res);
-          if(res){
-            console.log(res);
-            const ipPort = res.data.split(':');
-            const rules = {
-              singleProxy: {
-                scheme: configFree.type,
-                host: ipPort[0],
-                port: ipPort[1]
-              }
-            };
-            console.log('rules', rules);
-          }
-
-        });
-
-      }
+      let url = 'http://localhost:3000/getProxies';
+      fetch(url)
+        .then(response => response.json())
+        .then(result => {
+          let proxies = result.locations.filter(el => el.country_code === data.country)[0].nodes;
+         // connect to first
+          connect(proxies[0]);
+        })
+        .catch(err => console.log(err));
       break;
     }
     case 'personal': {
-      console.log(data.type);
+      console.log(data);
+      connect(data);
+      //connect to data
       break;
     }
     default: {
@@ -148,6 +178,53 @@ chrome.runtime.onMessage.addListener((msg) => {
     }
 
   }
-
 });
 
+const connect = (proxy) => {
+  console.log('try connect', proxy);
+
+
+  var config = {
+    mode: "fixed_servers",
+    rules: {
+      singleProxy: {
+        scheme: 'http',
+        host: proxy.ip,
+        port: +proxy.port
+      }
+    }
+  };
+  console.log(config);
+  chrome.proxy.settings.set(
+    {value: config, scope: 'regular'},
+    function() {});
+
+
+
+//  let proxySettings = {
+//     mode: "fixed_servers",
+//     rules: {
+//       singleProxy: {
+//         scheme: proxy.schema,
+//         host: proxy.ip,
+//         port: +proxy.port
+//       }
+//     }
+//   };
+// console.log(proxySettings);
+//   chrome.proxy.settings.set(
+//     {value: proxySettings, scope: 'regular'},
+//     function() {});
+//
+setTimeout(()=> {
+  chrome.proxy.settings.get(
+    {'incognito': false},
+    function(config) {console.log(config);});
+},6000);
+
+};
+const disconnect = () => {
+  console.log('try disconnect');
+  chrome.proxy.settings.clear({}, function () {
+  });
+};
