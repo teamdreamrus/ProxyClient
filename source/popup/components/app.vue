@@ -24,7 +24,8 @@
   },
   data() {
     return {
-      data: 'tut'
+      data: 'tut',
+
     };
   },
   methods: {},

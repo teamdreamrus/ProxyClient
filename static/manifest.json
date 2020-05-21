@@ -11,7 +11,9 @@
     "tabs",
     "cookies",
     "<all_urls>",
-    "proxy"
+    "proxy",
+    "webRequest",
+    "webRequestBlocking"
   ],
   "background": {
     "scripts": ["vendors/bundle.js", "bg/bundle.js"],
